@@ -1,18 +1,28 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-# Other files and folders
-.settings/
-
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
-
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+contract Register {
+    string public github;
+    address public owner;
+    
+    struct Referral {
+        address referralAddress;
+        string referralString;
+    }
+    
+    Referral[] public referrals;
+    
+    constructor() {
+        github = "ganti_pake_username_github_kalian";
+        owner = “ganti_pake_address_kalian”;
+    }
+    
+    function addReferral(address _referralAddress, string memory _referralString) external {
+        require(msg.sender == owner, "Only the owner can add referrals.");
+        referrals.push(Referral(_referralAddress, _referralString));
+    }
+    
+    function totalReferrals() public view returns (uint256) {
+        return referrals.length;
+    }
+}
